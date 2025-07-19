@@ -24,7 +24,7 @@ export default function RoomChat({ loading }) {
                 followOutput="smooth"
                 className="scrollbar-thin"
                 components={{
-                    List: React.forwardRef((props, ref) => <ul {...props} ref={ref} className="px-[15px] space-y-[10px]" />),
+                    List: React.forwardRef(function VirtuosoList(props, ref) { return <ul {...props} ref={ref} className="px-[15px] space-y-[10px]" /> }),
                     Header: () => <div className="h-[30px]" /> 
                 }}
                 itemContent={(index) => {

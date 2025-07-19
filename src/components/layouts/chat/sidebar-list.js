@@ -56,7 +56,7 @@ export default function SidebarList({ chatType, loading }) {
                         }
                         className="scrollbar-thin"
                         components={{
-                            List: React.forwardRef((props, ref) => {
+                            List: React.forwardRef(function VirtuosoList(props, ref) {
                                 return <ul {...props} ref={ref} className="space-y-[5px] px-[20px]" />
                             })
                         }}
