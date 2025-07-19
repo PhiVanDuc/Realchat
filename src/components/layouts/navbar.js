@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 
-export default function Navbar({ hiddenButton }) {
+export default function Navbar({ hiddenButton, className }) {
     return (
-        <div className="fixed top-0 w-full h-14 px-4 border-b shadow-sm bg-white flex items-center">
+        <div className={cn(
+            "fixed top-0 w-full h-14 px-4 border-b shadow-sm bg-white flex items-center",
+            className
+        )}>
             <div className={cn(
                 "md:max-w-screen-2xl mx-auto flex items-center w-full",
                 hiddenButton ? "justify-start" : "justify-between"

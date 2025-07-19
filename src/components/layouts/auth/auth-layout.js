@@ -6,6 +6,7 @@ export default function AuthLayout({ children }) {
         <div className="min-h-screen bg-slate-100 flex flex-col">
             <Navbar
                 hiddenButton={true}
+                className="hidden sm:flex"
             />
 
             <main className="flex-1 flex items-center justify-center bg-slate-100 px-[20px]">

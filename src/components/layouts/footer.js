@@ -11,7 +11,7 @@ export default function Footer({ className }) {
             <div className="md:max-w-screen-2xl mx-auto flex items-center w-full justify-between">
                 <Logo />
 
-                <div className="space-x-4 md:block md:w-auto flex items-center justify-between w-full">
+                <div className="space-x-4 md:block md:w-auto flex flex-wrap items-center justify-between w-full">
                     <Button size="sm" variant="ghost">
                         Chính sách quyền riêng tư
                     </Button>
