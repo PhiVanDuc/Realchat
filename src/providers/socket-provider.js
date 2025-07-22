@@ -12,38 +12,38 @@ export default function SocketProvider({ children }) {
     const [isConnected, setIsConnected] = useState(false);
     const [onlineUsers, setOnlineUsers] = useState([]);
 
-    // useEffect(() => {
-    //     let socketInstance = null;
+    useEffect(() => {
+        let socketInstance = null;
 
-    //     const initSocket = async () => {
-    //         const userInfo = await getUserInfo();
+        const initSocket = async () => {
+            const userInfo = await getUserInfo();
 
-    //         if (userInfo.auth) {
-    //             socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_API, {
-    //                 auth: {
-    //                     token: userInfo?.accessToken,
-    //                     id: userInfo?.info?.id
-    //                 }
-    //             });
+            if (userInfo.auth) {
+                socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_API, {
+                    auth: {
+                        token: userInfo?.accessToken,
+                        id: userInfo?.info?.id
+                    }
+                });
 
-    //             socketInstance.on('connect', () => { setIsConnected(true) });
-    //             socketInstance.on('disconnect', () => { setIsConnected(false) });
-    //             socketInstance.on('users-online', (data) => { setOnlineUsers(data) });
+                socketInstance.on('connect', () => { setIsConnected(true) });
+                socketInstance.on('disconnect', () => { setIsConnected(false) });
+                socketInstance.on('users-online', (data) => { setOnlineUsers(data) });
 
-    //             setSocket(socketInstance);
-    //         }
-    //     }
+                setSocket(socketInstance);
+            }
+        }
 
-    //     initSocket();
+        initSocket();
 
-    //     return () => {
-    //         if (socketInstance) {
-    //             socketInstance.close();
-    //             setSocket(null);
-    //             setIsConnected(false);
-    //         }
-    //     }
-    // }, []);
+        return () => {
+            if (socketInstance) {
+                socketInstance.close();
+                setSocket(null);
+                setIsConnected(false);
+            }
+        }
+    }, []);
 
     return (
         <SocketContext.Provider value={{ socket, isConnected, onlineUsers }}>

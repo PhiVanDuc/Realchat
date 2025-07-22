@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function RoomInfoLoading() {
     return (
-        <div className="flex items-center gap-[15px]">
+        <div className="w-full flex items-center gap-[15px]">
             <Skeleton className="shrink-0 w-[48px] aspect-square rounded-full" />
             
             <div className="space-y-[5px] w-full">

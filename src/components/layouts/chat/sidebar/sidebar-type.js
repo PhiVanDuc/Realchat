@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
+import { FaUser } from "react-icons/fa";
 import { IoIosExit } from "react-icons/io";
 import { FaUserGroup } from "react-icons/fa6";
 import { BiSolidMessageDetail } from "react-icons/bi";
@@ -11,21 +12,28 @@ import { cn } from "@/lib/utils";
 
 const types = [
     {
+        icon: FaUser,
+        type: "users",
+        size: 18
+    },
+    {
         icon: BiSolidMessageDetail,
-        type: "normal"
+        type: "normal",
+        size: 20
     },
     {
         icon: FaUserGroup,
-        type: "group"
+        type: "group",
+        size: 20
     }
 ]
 
-export default function SidebarType({ chatType, setChatType }) {
+export default function SidebarType({ sidebarType, setSidebarType }) {
     const router = useRouter();
 
     return (
         <section className="order-2 xl:order-1 xl:p-[20px] border-t border-neutral-200 xl:border-t-0 self-stretch">
-            <div className="flex flex-row xl:flex-col justify-between sm:justify-center xl:justify-start px-[20px] xl:px-0 py-[20px] gap-[20px] xl:gap-[5px]">
+            <div className="flex flex-row xl:flex-col justify-between sm:justify-center xl:justify-start px-[20px] xl:px-0 py-[20px] gap-[20px] xl:gap-[10px]">
                 {
                     types.map(type => {
                         return (
@@ -34,15 +42,15 @@ export default function SidebarType({ chatType, setChatType }) {
                                 type="button"
                                 className={cn(
                                     "flex items-center justify-center text-neutral-500 w-[40px] aspect-square rounded-[8px] transition-color duration-500 cursor-pointer",
-                                    chatType === type.type ? "bg-neutral-200 xl:bg-white" : "hover:bg-neutral-200 xl:hover:bg-white"
+                                    sidebarType === type.type ? "bg-neutral-200 xl:bg-white" : "hover:bg-neutral-200 xl:hover:bg-white"
                                 )}
                                 onClick={() => {
-                                    setChatType(type.type);
+                                    setSidebarType(type.type);
                                     if (type.type === "exit") router.push("/");
                                 }}
                             >
                                 <type.icon
-                                    size={20}
+                                    size={type.size}
                                 />
                             </button>
                         )

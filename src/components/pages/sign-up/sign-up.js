@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import Link from "next/link";
@@ -15,15 +17,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import { signUp } from "@/actions/auth";
+import { toast } from "sonner";
+
 export default function SignUp() {
+    const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
         defaultValues: {
-            fullname: "",
             name: "",
+            fullname: "",
             password: "",
             confirm: ""
         }
     });
+
+    const onSubmit = async (data) => {
+        setSubmitting(true);
+        const { result } = await signUp(data);
+        setSubmitting(false);
+        
+        if (result?.success) {
+            router.push("/sign-in");
+            return;
+        }
+        else toast.error(result?.message);
+    }
 
     return (
         <div className="shrink-0 space-y-[50px] w-full max-w-[490px] p-[20px] bg-white rounded-[10px]">
@@ -35,6 +55,7 @@ export default function SignUp() {
             <Form {...form}>
                 <form
                     autoComplete="off"
+                    onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-[20px]"
                 >
                     <FormField
@@ -127,7 +148,12 @@ export default function SignUp() {
                         </Link>
                     </div>
 
-                    <Button className="w-full">Đăng ký</Button>
+                    <Button
+                        className="w-full"
+                        disabled={submitting}
+                    >
+                        Đăng ký
+                    </Button>
                 </form>
             </Form>
         </div>

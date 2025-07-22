@@ -4,12 +4,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-export default function Logo({ hiddenButton, width, height, className }) {
+export default function Logo({ width = 20, height = 20, wrapperClassName, textClassName }) {
     return (
         <Link href="/">
             <div className={cn(
-                "hover:opacity-75 transition items-center gap-x-[10px]",
-                hiddenButton ? "flex" : "hidden md:flex"
+                "hidden md:flex hover:opacity-75 transition items-center gap-x-[10px]",
+                wrapperClassName
             )}>
                 <Image
                     src="/Logo.png"
@@ -17,11 +17,12 @@ export default function Logo({ hiddenButton, width, height, className }) {
                     width={width || 20}
                     height={height || 20}
                     priority={true}
+                    style={{ width: "auto", height: "auto" }}
                 />
 
                 <p className={cn(
                     "text-[18px] font-semibold text-neutral-700 pb-1",
-                    className
+                    textClassName
                 )}>
                     Realchat
                 </p>

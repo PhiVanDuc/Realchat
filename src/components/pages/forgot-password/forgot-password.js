@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 
@@ -15,15 +17,32 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import { toast } from "sonner";
+import { forgotPassword } from "@/actions/auth";
+
 export default function ForgotPassword() {
+    const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
         defaultValues: {
-            fullname: "",
             name: "",
             password: "",
             confirm: ""
         }
     });
+
+    const onSubmit = async (data) => {
+        setSubmitting(true);
+        const { result } = await forgotPassword(data);
+        setSubmitting(false);
+
+        if (result?.success) {
+            router.push("/sign-in");
+            return;
+        }
+        else toast.error(result?.message);
+    }
 
     return (
         <div className="shrink-0 space-y-[50px] w-full max-w-[490px] p-[20px] bg-white rounded-[10px]">
@@ -35,6 +54,7 @@ export default function ForgotPassword() {
             <Form {...form}>
                 <form
                     autoComplete="off"
+                    onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-[20px]"
                 >
                     <FormField
@@ -109,7 +129,12 @@ export default function ForgotPassword() {
                         </Link>
                     </div>
 
-                    <Button className="w-full">Đổi mật khẩu</Button>
+                    <Button
+                        disabled={submitting}
+                        className="w-full"
+                    >
+                        Đổi mật khẩu
+                    </Button>
                 </form>
             </Form>
         </div>

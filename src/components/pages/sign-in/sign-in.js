@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 import Link from "next/link";
 
@@ -14,16 +16,33 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
 import { FcGoogle } from "react-icons/fc";
 
+import { signIn } from "@/actions/auth";
+import { toast } from "sonner";
+
 export default function SignIn() {
+    const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
+
     const form = useForm({
         defaultValues: {
             name: "",
             password: ""
         }
     });
+
+    const onSubmit = async (data) => {
+        setSubmitting(true);
+        const { result } = await signIn(data);
+        setSubmitting(false);
+
+        if (result?.success) {
+            router.push("/");
+            return;
+        }
+        else toast.error(result?.message);
+    }
 
     return (
         <div className="shrink-0 space-y-[50px] w-full max-w-[490px] p-[20px] bg-white rounded-[10px]">
@@ -33,7 +52,10 @@ export default function SignIn() {
             </header>
 
             <div>
-                <section className="flex items-center justify-center gap-[12px] p-[10px] rounded-[10px] border border-neutral-300 hover:bg-neutral-100 hover:border-neutral-100 transition-color duration-300 cursor-pointer mb-[10px]">
+                <section
+                    className="flex items-center justify-center gap-[12px] p-[10px] rounded-[10px] border border-neutral-300 hover:bg-neutral-100 hover:border-neutral-100 transition-color duration-300 cursor-pointer mb-[10px]"
+                    onClick={() => { window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_API_CALL}/auth/google` }}
+                >
                     <FcGoogle size={25} />
                     <p className="text-[14px] text-neutral-600 font-medium">Đăng nhập với Google</p>
                 </section>
@@ -46,6 +68,7 @@ export default function SignIn() {
                 <Form {...form}>
                     <form
                         autoComplete="off"
+                        onSubmit={form.handleSubmit(onSubmit)}
                         className="space-y-[20px]"
                     >
                         <FormField
@@ -101,7 +124,12 @@ export default function SignIn() {
                             </Link>
                         </div>
 
-                        <Button className="w-full">Đăng nhập</Button>
+                        <Button
+                            className="w-full"
+                            disabled={submitting}
+                        >
+                            Đăng nhập
+                        </Button>
                     </form>
                 </Form>
             </div>

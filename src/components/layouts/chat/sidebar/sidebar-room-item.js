@@ -5,7 +5,7 @@ import { useExpandSidebar } from "@/providers/expand-sidebar-provider";
 import Link from "next/link";
 import OnlineStatus from "@/components/reuseable/online-status";
 
-export default function SidebarItem() {
+export default function SidebarRoomItem() {
     const { setExpandSidebar } = useExpandSidebar();
 
     return (

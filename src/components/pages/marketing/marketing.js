@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
 import { Medal } from "lucide-react";
 
-export default function Marketing() {
+import getUserInfo from "@/utils/get-user-info";
+
+export default async function Marketing() {
+    const userInfo = await getUserInfo();
+
     return (
         <div className="flex items-center justify-center flex-col">
             <div className="flex items-center justify-center flex-col">
-                <div className="flex items-center border border-amber-100 shadow-sm p-4 py-[12px] bg-amber-100 text-[14px] text-amber-700 font-semibold rounded-full uppercase mb-[100px]">
+                <div className="flex items-center border border-amber-100 shadow-sm p-4 py-[12px] bg-amber-100 text-[14px] text-amber-700 font-semibold rounded-full uppercase mb-[60px] sm:mb-[100px]">
                     <Medal className="h-6 w-6 mr-2" />
                     Được tin dùng hàng đầu
                 </div>
@@ -25,9 +28,19 @@ export default function Marketing() {
                 Kết nối, nâng cao, quản lý công việc và nâng cao hiệu suất. Từ văn phòng đến làm việc từ xa giúp bạn và đội nhóm hoàn thành mọi mục tiêu theo cách riêng.
             </div>
 
-            <Button className="mt-6" size="lg">
-                <Link href="/sign-up">Trải nghiệm miễn phí</Link>
-            </Button>
+            {
+                !userInfo.auth ?
+                (
+                    <Button className="mt-6" size="lg">
+                        <Link href="/sign-up">Trải nghiệm miễn phí</Link>
+                    </Button>
+                ) :
+                (
+                    <Button className="mt-6" size="lg">
+                        <Link href="/chat">Bắt đầu trải nghiệm</Link>
+                    </Button>
+                )
+            }
         </div>
     )
 }
