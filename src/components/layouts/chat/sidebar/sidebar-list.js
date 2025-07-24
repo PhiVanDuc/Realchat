@@ -29,11 +29,10 @@ export default function SidebarList({
     const router = useRouter();
     const [isGetMore, setIsGetMore] = useState(false);
 
-    const handleGetMore = async () => {
-        if (pagination?.page === pagination?.totalPages || isGetMore) return;
+    const handleGetMore = async (atBottom) => {
+        if (!atBottom || loading || !pagination?.hasNextPage || isGetMore) return;
 
         setIsGetMore(true);
-
         await fetchList({
             page: pagination?.page + 1,
             sidebarType,
@@ -42,7 +41,6 @@ export default function SidebarList({
             setList,
             setPagination
         });
-
         setIsGetMore(false);
     }
 
@@ -85,7 +83,7 @@ export default function SidebarList({
                             <Virtuoso
                                 style={{ height: "100%" }}
                                 className="scrollbar-thin"
-                                endReached={handleGetMore}
+                                atBottomStateChange={handleGetMore}
                                 totalCount={
                                     loading ? 4 :
                                     list?.length === 0 ? 1 :

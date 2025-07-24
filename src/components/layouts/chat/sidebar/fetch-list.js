@@ -24,7 +24,7 @@ const fetchList = async ({
             return;
         }
 
-        const { accounts, page: resultPage, totalPages } = result?.data;
+        const { accounts, page: resultPage, hasNextPage } = result?.data;
 
         setList((state) => {
             if (isGetMore) return [...state, ...accounts];
@@ -33,7 +33,7 @@ const fetchList = async ({
 
         setPagination({
             page: resultPage,
-            totalPages
+            hasNextPage
         });
     }
 
@@ -48,7 +48,7 @@ const fetchList = async ({
             return;
         }
 
-        const { rooms, page: resultPage, totalPages } = result?.data;
+        const { rooms, page: resultPage, hasNextPage } = result?.data;
 
         setList((state) => {
             if (isGetMore) return [...state, ...rooms];
@@ -57,7 +57,7 @@ const fetchList = async ({
 
         setPagination({
             page: resultPage,
-            totalPages
+            hasNextPage
         });
     }
 }

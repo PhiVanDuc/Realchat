@@ -15,14 +15,12 @@ import { v4 } from "uuid";
 import { toast } from "sonner";
 import getUserInfo from "@/utils/get-user-info";
 import { createRoomMessage } from "@/actions/chat-normal";
-import { connectMessage, replaceTempMessage } from "@/utils/group-messages";
+import replaceTempMessage from "@/utils/replace-temp-message";
 
 export default function RoomForm({
     params,
     setMessages
 }) {
-    const [submitting, setSubmitting] = useState(false);
-
     const form = useForm({
         defaultValues: {
             content: "",
@@ -32,35 +30,27 @@ export default function RoomForm({
 
     const onSubmit = async (data) => {
         const useInfo = await getUserInfo();
-        if (submitting) return;
 
-        // Xử lý việc tin nhắn tạm thời
         const tempId = v4();
-
-        const prepareData = {
+        const tempMessage = {
+            id: tempId,
             sender: {
                 id: useInfo?.info?.id,
                 fullName: useInfo?.info?.fullName,
                 avatar: useInfo?.info?.avatar
             },
-            messages: [{
-                id: tempId,
-                content: form.getValues("content"),
-                isTemp: true
-            }]
-        };
-        
-        setMessages((state) => connectMessage(prepareData, state));
-        form.reset();
-        // Kết thúc
+            content: data.content,
+            isTemp: true
+        }
 
-        setSubmitting(true);
+        setMessages((state) => [...state, tempMessage]);
+        form.reset();
+
         const result = await createRoomMessage({
             ...data,
-            tempId: tempId,
+            tempId,
             roomId: params?.roomId
         });
-        setSubmitting(false);
 
         if (result?.success) setMessages((state) => replaceTempMessage(result?.data, state));
         else toast.error(result?.message);

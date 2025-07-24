@@ -19,7 +19,7 @@ export default function Sidebar({ userInfo }) {
     const [list, setList] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [pagination, setPagination] = useState({ page: 1, totalPages: 1 });
+    const [pagination, setPagination] = useState({ page: 1, hasNextPage: true });
     const [sidebarType, setSidebarType] = useState(pathname === "/create-group" ? "group" : "normal");
 
     // Lấy danh sách
@@ -27,7 +27,7 @@ export default function Sidebar({ userInfo }) {
         setList([]);
         setError(null);
         setLoading(true);
-        setPagination({ page: 1, totalPages: 1 });
+        setPagination({ page: 1, hasNextPage: true });
 
         (async () => {
             await fetchList({
@@ -49,13 +49,18 @@ export default function Sidebar({ userInfo }) {
 
         socket.on("update-room-normal-item", ({ room, message }) => {
             const copyRoom = {...room};
+            const copyMessage = {...message};
+
             const member = room?.members?.find(member => member?.id !== userInfo?.info?.id);
             delete copyRoom.members;
 
+            message.sender_id = copyMessage?.sender?.id;
+            delete copyMessage.sender;
+
             const formatRoomItem = {
-                ...room,
                 member,
-                message
+                ...copyRoom,
+                message: copyMessage
             }
 
             setList((state) => {

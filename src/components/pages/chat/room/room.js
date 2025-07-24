@@ -8,7 +8,6 @@ import RoomForm from "./room-form";
 import RoomInfo from "./room-info";
 
 import getUserInfo from "@/utils/get-user-info";
-import { connectMessage, formatMessage } from "@/utils/group-messages";
 
 export default function Room({ params }) {
     const { socket } = useSocket();
@@ -39,21 +38,18 @@ export default function Room({ params }) {
         if (!socket) return;
 
         socket.on("recive-message", (data) => {
-            if (data) {
-                const formatData = formatMessage(data);
-                setMessages(connectMessage(formatData, messages));
-            }
+            setMessages((state) => [...state, data]);
         })
 
         return () => { socket.off("recive-message"); }
     }, [socket, messages]);
 
     return (
-        <section className="w-full flex-1">
-            <div className="flex flex-col items-center justify-center rounded-[12px] h-full bg-white xl:border xl:border-neutral-200">
+        <section className="w-full flex-1 flex flex-col">
+            <div className="flex flex-col flex-1 rounded-[12px] bg-white xl:border xl:border-neutral-200">
                 <RoomInfo params={params} />
                 <RoomChat params={params} messages={messages} setMessages={setMessages} />
-                <RoomForm params={params} setMessages={setMessages} />
+                <RoomForm params={params} messages={messages}  setMessages={setMessages} />
             </div>
         </section>
     )

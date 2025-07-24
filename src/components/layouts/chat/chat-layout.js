@@ -11,7 +11,7 @@ export default async function ChatLayout({ children }) {
             <main className="bg-slate-100 h-dvh flex items-stretch">
                 <Sidebar userInfo={userInfo} />
                 
-                <div className="relative xl:pl-[480px] xl:py-[20px] xl:pr-[20px] flex flex-col w-full items-stretch transition-all duration-300">
+                <div className="xl:pl-[480px] xl:py-[20px] xl:pr-[20px] flex flex-col w-full items-stretch transition-all duration-300">
                     {children}
                 </div>
             </main>

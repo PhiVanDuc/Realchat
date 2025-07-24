@@ -11,14 +11,14 @@ export default function RoomChatLoading() {
                 </div>
 
                 <div className="flex flex-col w-full items-start gap-y-[5px]">
-                    <Skeleton className="w-[350px] h-[42.5px] rounded-[99px] rounded-bl-[30px]" />
-                    <Skeleton className="w-[550px] h-[42.5px] rounded-[99px] rounded-tl-[30px]" />
+                    <Skeleton className="w-[350px] h-[42.5px] rounded-[30px] rounded-bl-[5px]" />
+                    <Skeleton className="w-[550px] h-[42.5px] rounded-[30px] rounded-tl-[5px]" />
                 </div>
             </div>
 
             <div className="flex flex-col items-end gap-[3px] w-full">
-                <Skeleton className="w-[350px] h-[42.5px] rounded-[99px] rounded-br-[30px]" />
-                <Skeleton className="w-[550px] h-[42.5px] rounded-[99px] rounded-tr-[30px]" />
+                <Skeleton className="w-[350px] h-[42.5px] rounded-[30px] rounded-br-[5px]" />
+                <Skeleton className="w-[550px] h-[42.5px] rounded-[30px] rounded-tr-[5px]" />
             </div>
 
             <div className="flex items-stretch gap-[10px]">
@@ -27,7 +27,7 @@ export default function RoomChatLoading() {
                 </div>
 
                 <div className="flex flex-col w-full items-start gap-y-[5px]">
-                    <Skeleton className="w-[350px] h-[42.5px] rounded-[99px]" />
+                    <Skeleton className="w-[350px] h-[42.5px] rounded-[30px]" />
                 </div>
             </div>
         </div>
