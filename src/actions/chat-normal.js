@@ -3,6 +3,12 @@
 import fetchPrivate from "@/lib/fetch/fetch-auth";
 import getUserInfo from "@/utils/get-user-info";
 
+const getRooms = async ({ accountId, page }) => {
+    const userInfo = await getUserInfo();
+    const { response, result } = await fetchPrivate.get(`/chat-rooms/normal?accountId=${accountId}&page=${page || 1}`);
+    return { status: response?.status || -1, result };
+}
+
 const createRoomNormal = async (partnerId) => {
     const userInfo = await getUserInfo();
 
@@ -43,6 +49,7 @@ const createRoomMessage = async (data) => {
 }
 
 export {
+    getRooms,
     createRoomNormal,
     getRoomMembers,
     getRoomMessages,

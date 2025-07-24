@@ -17,28 +17,27 @@ export default function SocketProvider({ children }) {
 
         const initSocket = async () => {
             const userInfo = await getUserInfo();
+            if (!userInfo?.auth) return;
 
-            if (userInfo.auth) {
-                socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_API, {
-                    auth: {
-                        token: userInfo?.accessToken,
-                        id: userInfo?.info?.id
-                    }
-                });
+            socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_API, {
+                auth: {
+                    token: userInfo?.accessToken,
+                    id: userInfo?.info?.id
+                }
+            });
 
-                socketInstance.on('connect', () => { setIsConnected(true) });
-                socketInstance.on('disconnect', () => { setIsConnected(false) });
-                socketInstance.on('users-online', (data) => { setOnlineUsers(data) });
+            socketInstance.on('connect', () => { setIsConnected(true) });
+            socketInstance.on('disconnect', () => { setIsConnected(false) });
+            socketInstance.on('users-online', (data) => { setOnlineUsers(data) });
 
-                setSocket(socketInstance);
-            }
+            setSocket(socketInstance);
         }
 
         initSocket();
 
         return () => {
             if (socketInstance) {
-                socketInstance.close();
+                socketInstance.disconnect();
                 setSocket(null);
                 setIsConnected(false);
             }
@@ -46,7 +45,11 @@ export default function SocketProvider({ children }) {
     }, []);
 
     return (
-        <SocketContext.Provider value={{ socket, isConnected, onlineUsers }}>
+        <SocketContext.Provider value={{
+            socket,
+            isConnected,
+            onlineUsers
+        }}>
             {children}
         </SocketContext.Provider>
     )

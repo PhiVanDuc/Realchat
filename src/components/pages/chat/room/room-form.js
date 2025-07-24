@@ -11,11 +11,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { createRoomMessage } from "@/actions/chat-normal";
+import { v4 } from "uuid";
 import { toast } from "sonner";
+import getUserInfo from "@/utils/get-user-info";
+import { createRoomMessage } from "@/actions/chat-normal";
+import { connectMessage, replaceTempMessage } from "@/utils/group-messages";
 
-export default function RoomForm({ params }) {
-    const [submitting, setSubmitting] = useState();
+export default function RoomForm({
+    params,
+    setMessages
+}) {
+    const [submitting, setSubmitting] = useState(false);
 
     const form = useForm({
         defaultValues: {
@@ -25,19 +31,38 @@ export default function RoomForm({ params }) {
     });
 
     const onSubmit = async (data) => {
+        const useInfo = await getUserInfo();
         if (submitting) return;
+
+        // Xử lý việc tin nhắn tạm thời
+        const tempId = v4();
+
+        const prepareData = {
+            sender: {
+                id: useInfo?.info?.id,
+                fullName: useInfo?.info?.fullName,
+                avatar: useInfo?.info?.avatar
+            },
+            messages: [{
+                id: tempId,
+                content: form.getValues("content"),
+                isTemp: true
+            }]
+        };
+        
+        setMessages((state) => connectMessage(prepareData, state));
+        form.reset();
+        // Kết thúc
 
         setSubmitting(true);
         const result = await createRoomMessage({
             ...data,
+            tempId: tempId,
             roomId: params?.roomId
         });
         setSubmitting(false);
 
-        if (result?.success) {
-            form.reset();
-            return;
-        }
+        if (result?.success) setMessages((state) => replaceTempMessage(result?.data, state));
         else toast.error(result?.message);
     }
 

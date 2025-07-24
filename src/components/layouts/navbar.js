@@ -1,9 +1,8 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 import Logo from "./logo";
 import SignOutButton from "../reuseable/sign-out-button";
-
-import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 import getUserInfo from "@/utils/get-user-info";

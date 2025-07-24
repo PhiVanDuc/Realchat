@@ -5,7 +5,7 @@ import OnlineStatus from "@/components/reuseable/online-status";
 
 import { cn } from "@/lib/utils";
 
-export default function MessagePartner({ accountId, room, groupMessages }) {
+export default function MessagePartner({ accountId, groupMessages }) {
     return (
         <li className="flex gap-[15px] items-stretch">
             <div className="self-stretch flex items-end">
@@ -31,7 +31,7 @@ export default function MessagePartner({ accountId, room, groupMessages }) {
                 </div>
             </div>
 
-            <div className="w-fit space-y-[2px]">
+            <div className="w-full space-y-[3px]">
                 {
                     groupMessages?.messages.map((message, index) => {
                         const first = index === 0 && groupMessages?.messages?.length >= 2;
@@ -41,18 +41,14 @@ export default function MessagePartner({ accountId, room, groupMessages }) {
                         return (
                             <div
                                 key={message?.id}
-                                className="w-fit flex flex-col items-end"
+                                className={cn(
+                                    "w-fit max-w-[90%] sm:max-w-[80%] p-[15px] py-[8px] rounded-[20px] bg-neutral-200",
+                                    first ? "rounded-bl-[4px]" :
+                                    middle ? "rounded-bl-[4px] rounded-tl-[4px]" :
+                                    last ? "rounded-tl-[4px]" : ""
+                                )}
                             >
-                                <div
-                                    className={cn(
-                                        "w-fit p-[15px] py-[10px] rounded-[99px] bg-neutral-200",
-                                        first ? "rounded-bl-[30px]" :
-                                        middle ? "rounded-bl-[30px] rounded-tl-[30px]" :
-                                        last ? "rounded-tl-[30px]" : ""
-                                    )}
-                                >
-                                    <p className="text-neutral-800 text-[15px]">{message?.content}</p>
-                                </div>
+                                <p className="text-neutral-700 sm:text-neutral-800 text-[14px] sm:text-[15px]">{message?.content}</p>
                             </div>
                         )
                     })

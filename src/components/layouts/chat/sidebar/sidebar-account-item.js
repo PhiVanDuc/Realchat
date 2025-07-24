@@ -42,7 +42,7 @@ export default function SidebarAccountItem({ account }) {
                     <div className='shrink-0 relative w-[50px] aspect-square rounded-full bg-neutral-300'>
                         <Image
                             src={account?.avatar}
-                            alt={`Avatar ${account?.fullName}`}
+                            alt={`Avatar ${account?.full_name}`}
                             fill
                             sizes='50'
                             className='object-center object-cover rounded-full'
@@ -53,7 +53,7 @@ export default function SidebarAccountItem({ account }) {
                 (<span className="shrink-0 w-[50px] aspect-square rounded-full bg-neutral-300" />)
             }
 
-            <p className='text-[16px] text-neutral-600 font-semibold'>{account?.fullName}</p>
+            <p className='text-[16px] text-neutral-600 font-semibold'>{account?.full_name}</p>
         </div>
     )
 }

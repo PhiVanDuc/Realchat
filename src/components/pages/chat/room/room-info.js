@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSocket } from "@/providers/socket-provider";
 
 import Image from "next/image";
-import RoomInfoLoading from "./loading/room-info-loading";
+import RoomAccountLoading from "./loading/room-account-loading";
 import OnlineStatus from "@/components/reuseable/online-status";
 import ToggleSidebarButton from "@/components/reuseable/toggle-sidebar-button";
 
@@ -40,7 +40,7 @@ export default function RoomInfo({ params }) {
             {
                 loading ? 
                 (
-                    <RoomInfoLoading />
+                    <RoomAccountLoading />
                 ) :
                 (
                     <div className="flex items-center gap-[15px]">
@@ -50,7 +50,7 @@ export default function RoomInfo({ params }) {
                                 <div className='shrink-0 relative w-[50px] aspect-square rounded-full bg-neutral-300'>
                                     <Image
                                         src={partner?.avatar}
-                                        alt={`Avatar ${partner?.fullName}`}
+                                        alt={`Avatar ${partner?.full_name}`}
                                         fill
                                         sizes='50'
                                         className='object-center object-cover rounded-full'
@@ -62,7 +62,7 @@ export default function RoomInfo({ params }) {
                         }
 
                         <div>
-                            <p className="text-[15px] text-neutral-600 font-semibold ellipsis-1-lines">{partner?.fullName}</p>
+                            <p className="text-[15px] text-neutral-600 font-semibold ellipsis-1-lines">{partner?.full_name}</p>
                             <p className="text-[13px] text-neutral-500 font-medium ellipsis-1-lines">
                                 {isOnline ? "Đang hoạt động." : "Đã ngừng hoạt động."}
                             </p>

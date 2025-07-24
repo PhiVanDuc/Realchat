@@ -1,9 +1,11 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import Error from "@/components/reuseable/error";
 import SidebarRoomItem from "./sidebar-room-item";
+import SidebarListEmpty from "./sidebar-list-empty";
 import SidebarAccountItem from "./sidebar-account-item";
 import SidebarRoomItemLoading from "../loading/sidebar-room-item-loading";
 import SidebarAccountItemLoading from "../loading/sidebar-account-item-loading";
@@ -12,10 +14,9 @@ import { Virtuoso } from "react-virtuoso";
 import { IoIosAdd } from "react-icons/io";
 
 import fetchList from "./fetch-list";
-import SidebarListEmpty from "./sidebar-list-empty";
-import Error from "@/components/reuseable/error";
 
 export default function SidebarList({
+    userInfo,
     sidebarType,
     loading,
     error,
@@ -105,7 +106,11 @@ export default function SidebarList({
                                     }
 
                                     if (list?.length === 0) return <SidebarListEmpty sidebarType={sidebarType} />
-                                    return sidebarType === "users" ? <SidebarAccountItem account={list[index]} /> : <SidebarRoomItem />;
+                                    else {
+                                        return sidebarType === "users" ? 
+                                            <SidebarAccountItem account={list[index]} /> :
+                                            <SidebarRoomItem room={list[index]} userInfo={userInfo} />;
+                                    }
                                 }}
                             />
                         )

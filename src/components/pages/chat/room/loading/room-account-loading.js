@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function RoomInfoLoading() {
+export default function RoomAccountLoading() {
     return (
         <div className="w-full flex items-center gap-[15px]">
             <Skeleton className="shrink-0 w-[48px] aspect-square rounded-full" />
