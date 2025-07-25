@@ -10,7 +10,7 @@ export default function MessagePartner({message, position, showAvatar}) {
     const { wrapper, textBox } = getBubbleClasses(position, true);
 
     return (
-        <li className={cn("flex items-center gap-[10px]", wrapper)}>
+        <div className={cn("flex items-center gap-[10px]", wrapper)}>
             {
                 showAvatar ? 
                 (
@@ -29,6 +29,6 @@ export default function MessagePartner({message, position, showAvatar}) {
                 (<div className="shrink-0 w-[40px] h-0"></div>)
             }
             <p className={cn("block leading-normal px-[15px] py-[8px] bg-neutral-200 text-[15px] text-neutral-700 rounded-[20px]", textBox)}>{message?.content}</p>
-        </li>
+        </div>
     )
 }

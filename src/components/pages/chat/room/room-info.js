@@ -8,7 +8,7 @@ import RoomAccountLoading from "./loading/room-account-loading";
 import OnlineStatus from "@/components/reuseable/online-status";
 import ToggleSidebarButton from "@/components/reuseable/toggle-sidebar-button";
 
-import { getRoomMembers } from "@/actions/chat-normal";
+import { getRoomMembers } from "@/actions/chat";
 import Error from "@/components/reuseable/error";
 
 export default function RoomInfo({ params }) {

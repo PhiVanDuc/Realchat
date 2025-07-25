@@ -1,11 +1,11 @@
 function getBubbleClasses(position, isPartner) {
     const result = {
-        wrapper: isPartner ? "pb-[2px]" : "pb-[3px]",
+        wrapper: isPartner ? "pl-[15px] pb-[2px]" : "pr-[15px] pb-[3px]",
         textBox: ""
     }
 
     if (position === "single") {
-        result.wrapper = "pb-[10px]";
+        result.wrapper = isPartner ? "pl-[15px] pb-[10px]" : "pr-[15px] pb-[10px]";
     }
 
     if (position === "first") {
@@ -19,7 +19,7 @@ function getBubbleClasses(position, isPartner) {
     }
 
     if (position === "last") {
-        result.wrapper = "pb-[10px]"
+        result.wrapper = isPartner ? "pl-[15px] pb-[10px]" : "pr-[15px] pb-[10px]";
 
         if (isPartner) result.textBox = `${result.textBox} rounded-tl-[5px]`
         else result.textBox = `${result.textBox} rounded-tr-[5px]`

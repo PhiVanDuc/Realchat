@@ -1,5 +1,5 @@
 import { getAccounts } from "@/actions/account";
-import { getRooms } from "@/actions/chat-normal";
+import { getNormalRooms } from "@/actions/chat";
 import getUserInfo from "@/utils/get-user-info";
 
 const fetchList = async ({
@@ -38,7 +38,7 @@ const fetchList = async ({
     }
 
     if (sidebarType === "normal") {
-        const { status, result } = await getRooms({
+        const { status, result } = await getNormalRooms({
             accountId: userInfo?.info?.id,
             page
         });

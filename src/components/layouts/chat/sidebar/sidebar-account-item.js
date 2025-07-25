@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import OnlineStatus from '@/components/reuseable/online-status';
 
-import { createRoomNormal } from '@/actions/chat-normal';
+import { createNormalRoom } from '@/actions/chat';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -18,7 +18,7 @@ export default function SidebarAccountItem({ account }) {
         if (submitting) return;
 
         setSubmitting(true);
-        const result = await createRoomNormal(partnerId);
+        const result = await createNormalRoom(partnerId);
         setSubmitting(false);
         
         if (result?.success) {

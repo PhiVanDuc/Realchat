@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { v4 } from "uuid";
 import { toast } from "sonner";
 import getUserInfo from "@/utils/get-user-info";
-import { createRoomMessage } from "@/actions/chat-normal";
+import { createRoomMessage } from "@/actions/chat";
 import replaceTempMessage from "@/utils/replace-temp-message";
 
 export default function RoomForm({
