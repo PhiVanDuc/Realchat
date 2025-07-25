@@ -45,8 +45,8 @@ export default function Room({ params }) {
     }, [socket, messages]);
 
     return (
-        <section className="w-full flex-1 flex flex-col">
-            <div className="flex flex-col flex-1 rounded-[12px] bg-white xl:border xl:border-neutral-200">
+        <section className="w-full flex-1 flex flex-col overflow-y-auto">
+            <div className="flex flex-col flex-1 rounded-[12px] bg-white xl:border xl:border-neutral-200 overflow-y-auto">
                 <RoomInfo params={params} />
                 <RoomChat params={params} messages={messages} setMessages={setMessages} />
                 <RoomForm params={params} messages={messages}  setMessages={setMessages} />

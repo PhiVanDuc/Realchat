@@ -69,7 +69,7 @@ export default function Sidebar({ userInfo }) {
             })
         });
 
-        () => { socket.off("update-room-normal-item") }
+        return () => { socket.off("update-room-normal-item") }
     }, [socket, list]);
 
     return (
