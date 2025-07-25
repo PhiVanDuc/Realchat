@@ -59,8 +59,20 @@ export default function RoomChat({
         if (onTop) {
             virtuosoRef.current.scrollToIndex({ index: onTop, align: 'start', behavior: 'auto' });
             setOnTop(0);
+            return;
         }
-        else virtuosoRef.current.scrollToIndex({ index: messages?.length, align: 'end', behavior: 'auto' });
+        
+        if (!loadedRef.current) {
+            virtuosoRef.current.scrollToIndex({ index: messages?.length, align: 'end', behavior: 'auto' });
+            return;
+        }
+
+        const lastMessage = messages?.[messages.length - 1];
+        if (!lastMessage) return;
+
+        if (lastMessage?.sender?.id === accountId) {
+            virtuosoRef.current.scrollToIndex({ index: messages?.length, align: 'end', behavior: 'smooth' });
+        }
     }, [messages]);
 
     // Lấy thêm tin nhắn
@@ -100,17 +112,7 @@ export default function RoomChat({
                         return <ul {...props} ref={ref} className="px-[15px]" />
                     }),
                     Header: () => (
-                        <header className="min-h-[30px] flex justify-center">
-                            {
-                                isGetMore &&
-                                (
-                                    <div className="flex items-center gap-[10px] p-[10px]">
-                                        <p className="text-[15px] text-neutral-400 font-medium">Tải thêm dữ liệu . . .</p>
-                                        <div className="w-[16px] h-[16px] border-3 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-                                    </div>
-                                )
-                            }
-                        </header>
+                        <header className="min-h-[30px]"></header>
                     )
                 }}
                 itemContent={(index, message) => {
