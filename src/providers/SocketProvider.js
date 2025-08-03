@@ -16,7 +16,6 @@ export default function SocketProvider({ children }) {
         const socketInstance = io(
             process.env.NEXT_PUBLIC_ROOT_API,
             {
-                withCredentials: true,
                 auth: {
                     accessToken: session.accessToken,
                     accountId: session.data?.id

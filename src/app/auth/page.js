@@ -34,10 +34,9 @@ export default function SignIn() {
             {
                 method: "POST",
                 credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+                cache: "no-store"
             }
         );
 
