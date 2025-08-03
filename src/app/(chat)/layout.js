@@ -9,10 +9,11 @@ export default async function ChatLayout({ children }) {
             "flex items-stretch w-full h-dvh bg-slate-100 transition-all duration-500",
             "lg:p-[20px] lg:pl-[440px]"
         )}>
-            <SocketProvider>
+            {/* <SocketProvider>
                 <Sidebar />
                 {children}
-            </SocketProvider>
+            </SocketProvider> */}
+            <p>Trang chính</p>
         </main>
     )
 }
