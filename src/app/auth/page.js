@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ import AuthGoogleButton from "./components/AuthGoogleButton";
 import { toast } from "sonner";
 
 export default function SignIn() {
-    const [submitting, setSubmitting] = useEffect(false);
+    const [submitting, setSubmitting] = useState(false);
 
     const form = useForm({
         defaultValues: {

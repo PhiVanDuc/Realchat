@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
@@ -19,6 +20,7 @@ import { toast } from "sonner";
 
 export default function SignUp() {
     const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
 
     const form = useForm({
         defaultValues: {
@@ -30,6 +32,7 @@ export default function SignUp() {
     });
 
     const handleSubmit = async (data) => {
+        setSubmitting(true);
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API}/auth/sign-up`,
             {
@@ -40,6 +43,8 @@ export default function SignUp() {
         );
         
         const result = await response.json();
+        setSubmitting(false);
+
         if (result.success) router.replace("/auth");
         else toast.warning(result.message);
     }
@@ -140,7 +145,12 @@ export default function SignUp() {
                             Đăng nhập
                         </Link>
 
-                        <Button className="w-full bg-indigo-500 hover:bg-indigo-600">Đăng ký</Button>
+                        <Button
+                            className="w-full bg-indigo-500 hover:bg-indigo-600"
+                            disabled={submitting}
+                        >
+                            { submitting ? "Đang đăng ký . . ." : "Đăng ký" }
+                        </Button>
                     </div>
                 </form>
             </Form>
