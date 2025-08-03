@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 
@@ -17,6 +18,8 @@ import AuthGoogleButton from "./components/AuthGoogleButton";
 import { toast } from "sonner";
 
 export default function SignIn() {
+    const [submitting, setSubmitting] = useEffect(false);
+
     const form = useForm({
         defaultValues: {
             name: "",
@@ -25,6 +28,7 @@ export default function SignIn() {
     });
 
     const handleSubmit = async (data) => {
+        setSubmitting(true);
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_API}/auth/sign-in`,
             {
@@ -36,7 +40,9 @@ export default function SignIn() {
         );
 
         const result = await response.json();
-        if (result.success) window.location.href = "/";
+        setSubmitting(false);
+
+        if (result.success) console.log(result);
         else toast.warning(result.message);
     }
 
@@ -108,7 +114,12 @@ export default function SignIn() {
                             Đăng ký
                         </Link>
 
-                        <Button className="w-full bg-indigo-500 hover:bg-indigo-600">Đăng nhập</Button>
+                        <Button
+                            className="w-full bg-indigo-500 hover:bg-indigo-600"
+                            disabled={submitting}
+                        >
+                            { submitting ? "Đang đăng nhập . . . " : "Đăng nhập" }
+                        </Button>
                     </div>
                 </form>
             </Form>
