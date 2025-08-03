@@ -33,8 +33,10 @@ export default function SignIn() {
             `${process.env.NEXT_PUBLIC_API}/auth/sign-in`,
             {
                 method: "POST",
-                credentials: "include",
-                headers: { "Content-Type": "application/json" },
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: JSON.stringify(data)
             }
         );

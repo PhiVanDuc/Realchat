@@ -9,13 +9,12 @@ import useMessagesStore from "@/stores/messages";
 
 import { toast } from "sonner";
 import { readMessage } from "@/actions/message";
-import formatRoomItem from "@/utils/format-room-item";
 
 export default function RoomEntry({ roomId }) {
     const session = useSession();
 
     const { socket } = useSocketStore();
-    const { rooms, updateRoomMsg } = useRoomsStore();
+    const { rooms } = useRoomsStore();
     const { messages, addMessage, deleteMessage, readMessage: readMessageState } = useMessagesStore();
 
     // Nhận sự kiện realtime khi vào room
@@ -48,11 +47,11 @@ export default function RoomEntry({ roomId }) {
 
     // Đọc tin nhắn khi có tin nhắn mới
     useEffect(() => {
-        if (messages.length === 0 || rooms.length === 0 || !session) return;
+        if (messages.length === 0 || rooms.length === 0 || !session || !session?.data) return;
 
         const lastMsg = messages[messages.length - 1];
         const isSender = lastMsg.sender_id === session.data.id;
-        if (isSender || lastMsg.is_read) return;
+        if (!lastMsg || isSender || lastMsg.is_read) return;
 
         const waitReadMsg = setTimeout(async () => {
             const result = await readMessage({ roomId, messageId: lastMsg.id, senderId: lastMsg.sender_id });

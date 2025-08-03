@@ -48,7 +48,7 @@ export default function MessageOwn({
                             ["middle", "last"].includes(position) ? "pt-[7px]" : ""
                         )}>
                             <p className="text-[13px] text-neutral-500 mb-[3px]">
-                                Trả lời {replied_message.sender.id === session.data.id ? "chính mình" : replied_message.sender.display_name}.
+                                Trả lời {replied_message.sender.id === session?.data?.id ? "chính mình" : replied_message.sender.display_name}.
                             </p>
                             
                             <p className={cn(

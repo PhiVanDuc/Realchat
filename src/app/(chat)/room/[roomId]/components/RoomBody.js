@@ -103,7 +103,7 @@ export default function RoomBody({ roomId }) {
                 }}
                 itemContent={(index, message) => {
                     const realIndex = index - firstItemIndex;
-                    const isPartner = message.sender.id !== session.data.id;
+                    const isPartner = message.sender.id !== session?.data?.id;
 
                     const prev = messages[realIndex - 1];
                     const next = messages[realIndex + 1];

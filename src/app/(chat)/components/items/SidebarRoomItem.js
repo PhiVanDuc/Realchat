@@ -43,7 +43,7 @@ export default function SidebarRoomItem({ room: { id, partner, message }, sessio
 
                 <p className={cn(
                     "text-[13px] font-semibold one-line",
-                    (message.is_read || message.sender_id === session.data.id) ? "text-neutral-400 font-medium" : "text-neutral-800 font-semibold"
+                    (message.is_read || message.sender_id === session?.data?.id) ? "text-neutral-400 font-medium" : "text-neutral-800 font-semibold"
                 )}>
                     <span className={cn("", message.sender_id === session?.data?.id ? "inline" : "hidden")}>
                         Bạn:

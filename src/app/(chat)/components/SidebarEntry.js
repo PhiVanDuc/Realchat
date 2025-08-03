@@ -15,7 +15,7 @@ export default function SidebarEntry() {
 
     // Nhận sự kiện realtime khi vào layout
     useEffect(() => {
-        if (!session || !socket) return;
+        if (!session || !session?.data || !socket) return;
 
         socket.on("room:new-message", (data) => {
             if (!data || !data?.room) return;
