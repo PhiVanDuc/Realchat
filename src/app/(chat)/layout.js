@@ -3,6 +3,11 @@ import SocketProvider from "@/providers/SocketProvider";
 
 import { cn } from "@/libs/utils";
 
+export const metadata = {
+    title: "Realchat",
+    description: "Bắt đầu nhắn tin tại đây!",
+};
+
 export default async function ChatLayout({ children }) {
     return (
         <main className={cn(

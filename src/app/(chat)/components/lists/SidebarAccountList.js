@@ -67,7 +67,7 @@ export default function SidebarAccountList() {
     return (
         <div
             className={cn(
-                "w-full flex-1 order-1 pb-[20px] bg-white flex flex-col gap-y-[20px]",
+                "relative w-full flex-1 order-1 pb-[20px] bg-white flex flex-col gap-y-[20px]",
                 "lg:w-[340px] lg:self-stretch lg:order-2 lg:rounded-[15px] lg:border lg:border-neutral-200"
             )}
         >

@@ -1,22 +1,28 @@
 "use client"
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useSidebarExpandStore from "@/stores/sidebar-expand";
 
 import Image from "next/image";
 import OnlineStatus from "@/components/reuses/OnlineStatus";
+
+import { cn } from "@/libs/utils";
 import { createRoom } from "@/actions/room";
 
 export default function SidebarAccountItem({ account: { id, display_name, avatar, room_id } }) {
     const router = useRouter();
+    const [submitting, setSubmitting] = useState(false);
     const { sidebarExpand, setSidebarExpand } = useSidebarExpandStore();
 
     const handleClick = async () => {
         if (!room_id) {
+            setSubmitting(true);
             const result = await createRoom(id);
             router.push(`/room/${result.data.id}`);
             
             setSidebarExpand(!sidebarExpand);
+            setSubmitting(false);
             return;
         }
 
@@ -26,7 +32,10 @@ export default function SidebarAccountItem({ account: { id, display_name, avatar
 
     return (
         <li
-            className="flex items-center gap-[15px] p-[15px] bg-white hover:bg-neutral-100 rounded-[10px] transition-colors cursor-pointer"
+            className={cn(
+                "flex items-center gap-[15px] p-[15px] bg-white hover:bg-neutral-100 rounded-[10px] transition-colors cursor-pointer",
+                submitting ? "bg-neutral-100" : ""
+            )}
             onClick={handleClick}
         >
             <div className="shrink-0 relative w-[50px] aspect-square rounded-full bg-slate-300">
