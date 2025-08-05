@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 
 import {
     Form,
@@ -11,6 +10,8 @@ import {
     FormLabel,
     FormControl
 } from "@/components/ui/form";
+
+import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AuthGoogleButton from "./components/AuthGoogleButton";
@@ -28,23 +29,23 @@ export default function SignIn() {
     });
 
     const handleSubmit = async (data) => {
-        setSubmitting(true);
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API}/auth/sign-in`,
-            {
+        try {
+            setSubmitting(true);
+            const response = await fetch("/api/auth/sign-in", {
                 method: "POST",
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),
-                cache: "no-store"
-            }
-        );
+            });
 
-        const result = await response.json();
-        setSubmitting(false);
-
-        if (result.success) console.log(result);
-        else toast.warning(result.message);
+            const result = await response.json();
+            setSubmitting(false);
+            form.reset();
+            
+            if (!result.success) toast.warning(result.message);
+            else window.location.href = "/";
+        }
+        catch(error) { console.log(error); }
     }
 
     return (

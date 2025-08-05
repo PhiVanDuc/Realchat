@@ -9,7 +9,7 @@ import { cn } from "@/libs/utils";
 import bubbleMessages from "@/utils/bubble-messages";
 
 export default function MessagePartner({
-    message: { id, content, sender, replied_message_id, replied_message },
+    message: { id, content, sender_id, sender, replied_message_id, replied_message },
     position, isPartner, showAvatar
 }) {
     const { setRepliedMessage } = useRepliedMessageStore();
@@ -58,7 +58,11 @@ export default function MessagePartner({
                             "max-w-[70%]",
                             ["middle", "last"].includes(position) ? "pt-[7px]" : ""
                         )}>
-                            <p className="text-[13px] text-neutral-400 mb-[3px]">Trả lời bạn.</p>
+                            <p className="text-[13px] text-neutral-400 mb-[3px]">
+                                {
+                                    replied_message.sender.id === sender_id ? "Trả lời chính mình." : "Trả lời bạn."
+                                }
+                            </p>
                             <p className="replied-message-box bg-indigo-300 text-white">
                                 {replied_message.is_deleted ? "Đã bị xóa." : replied_message.content}
                             </p>

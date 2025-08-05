@@ -12,13 +12,16 @@ const performRefresh = async () => {
             try {
                 const refreshToken = await getRefreshToken();
 
-                const response = await fetch(`${API}/token/refresh`, {
-                    method: "POST",
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' },
-                    cache: "no-store",
-                    body: JSON.stringify({ refreshToken })
-                });
+                const response = await fetch(
+                    `/api/token/refresh`,
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ refreshToken }),
+                        cache: "no-cache",
+                    }
+                );
 
                 const result = await response.json();
                 return result;
@@ -49,10 +52,9 @@ const handleFetch = async (method, url, opts = {}) => {
 
         const finalOpts = {
             method,
-            credentials: 'include',
             headers: finalHeaders,
-            cache: "no-store",
-            body
+            body,
+            cache: "no-cache",
         }
 
         const response = await fetch(`${API}${url}`, finalOpts);

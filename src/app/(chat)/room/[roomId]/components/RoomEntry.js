@@ -50,7 +50,7 @@ export default function RoomEntry({ roomId }) {
         if (messages.length === 0 || rooms.length === 0 || !session || !session?.data) return;
 
         const lastMsg = messages[messages.length - 1];
-        const isSender = lastMsg.sender_id === session.data.id;
+        const isSender = lastMsg.sender_id === session?.data?.id;
         if (!lastMsg || isSender || lastMsg.is_read) return;
 
         const waitReadMsg = setTimeout(async () => {
