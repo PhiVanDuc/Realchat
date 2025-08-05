@@ -11,7 +11,7 @@ import formatRoomItem from "@/utils/format-room-item";
 export default function SidebarEntry() {
     const session = useSession();
     const { socket } = useSocketStore();
-    const { updateRoomNewMsg, updateRoomMsg } = useRoomsStore();
+    const { updateRoomNewMsg, updateRoomReadMsg, updateRoomDeleteMsg } = useRoomsStore();
 
     // Nhận sự kiện realtime khi vào layout
     useEffect(() => {
@@ -24,15 +24,22 @@ export default function SidebarEntry() {
             updateRoomNewMsg(formatRoom);
         });
 
-        const handleUpdateRoomMsg = (data) => {
+        socket.on("room:delete-message", (data) => {
             if (!data || !data?.room) return;
 
             const formatRoom = formatRoomItem(data.room, session.data.id);
-            updateRoomMsg(formatRoom);
-        }
+            updateRoomDeleteMsg(formatRoom);
+        });
 
-        socket.on("room:delete-message", handleUpdateRoomMsg);
-        socket.on("room:read-message", handleUpdateRoomMsg);
+        socket.on("room:read-message", (data) => {
+            if (!data || !data?.room) return;
+
+            const formatRoom = formatRoomItem(data.room, session.data.id);
+
+            console.log(formatRoom);
+
+            updateRoomReadMsg(formatRoom);
+        });
 
         return () => {
             socket.off("room:new-message");

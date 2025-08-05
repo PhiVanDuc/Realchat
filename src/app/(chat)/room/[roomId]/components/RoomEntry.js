@@ -56,7 +56,7 @@ export default function RoomEntry({ roomId }) {
         const waitReadMsg = setTimeout(async () => {
             const result = await readMessage({ roomId, messageId: lastMsg.id, senderId: lastMsg.sender_id });
             if (!result.success) toast.warning(result.message);
-        }, 500);
+        }, 1000);
 
         return () => clearTimeout(waitReadMsg);
     }, [messages, rooms, session]);

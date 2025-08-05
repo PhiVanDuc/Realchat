@@ -3,6 +3,8 @@
 import useRepliedMessageStore from "@/stores/replied-message";
 
 import Image from "next/image";
+import OnlineStatus from "@/components/reuses/OnlineStatus";
+
 import { FaReply } from "react-icons/fa6";
 
 import { cn } from "@/libs/utils";
@@ -44,6 +46,8 @@ export default function MessagePartner({
                                 />
                             )
                         }
+
+                        <OnlineStatus className="w-[8px]" accountId={sender_id} />
                     </div>
                 ) :
                 (

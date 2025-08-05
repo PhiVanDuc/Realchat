@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import useMessagesStore from "@/stores/messages";
 
 import {
@@ -15,11 +16,15 @@ import { deleteMessage } from "@/actions/message";
 import { toast } from "sonner";
 
 export default function RoomDeleteMessageDialog({ open, setOpen, messageId }) {
-    const handleCloseDialog = () => { setOpen(false) }
+    const [submitting, setSubmitting] = useState();
     const { deleteMessage: deleteMessageHandler } = useMessagesStore();
 
+    const handleCloseDialog = () => { setOpen(false) }
+
     const handleDeleteMessage = async () => {
+        setSubmitting(true);
         const result = await deleteMessage(messageId);
+        setSubmitting(false);
 
         if (result.success) {
             deleteMessageHandler(result.data);
@@ -54,8 +59,9 @@ export default function RoomDeleteMessageDialog({ open, setOpen, messageId }) {
                         type="button"
                         className="bg-indigo-500 hover:bg-indigo-600"
                         onClick={handleDeleteMessage}
+                        disabled={submitting}
                     >
-                        Xác nhận
+                        { submitting ? "Đã xóa . . . "  : "Xác nhận" }
                     </Button>
                 </div>
             </DialogContent>

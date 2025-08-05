@@ -20,7 +20,19 @@ const useRoomsStore = create((set, get) => ({
         copyRooms.splice(index, 1);
         set({ rooms: [data, ...copyRooms] });
     },
-    updateRoomMsg: (data) => {
+    updateRoomDeleteMsg: (data) => {
+        if (!data) return;
+
+        const copyRooms = [...get().rooms];
+        const index = copyRooms.findIndex(room => room.id === data.id);
+        if (index === -1) return;
+
+        if (copyRooms[index].message.id !== data.message.id) return;
+
+        copyRooms[index] = data;
+        set({ rooms: copyRooms });
+    },
+    updateRoomReadMsg: (data) => {
         if (!data) return;
 
         const copyRooms = [...get().rooms];
