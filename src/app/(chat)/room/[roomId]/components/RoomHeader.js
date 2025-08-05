@@ -1,5 +1,6 @@
 "use client"
 
+import useRoomStore from "@/stores/room";
 import { useEffect, useState } from "react";
 import useSocketStore from "@/stores/socket";
 import useSidebarExpandStore from "@/stores/sidebar-expand";
@@ -17,6 +18,7 @@ import { partnerMessage } from "@/actions/message";
 import onlineStatus from "@/utils/online-status";
 
 export default function RoomHeader({ roomId }) {
+    const { setRoom } = useRoomStore();
     const { onlineUsers } = useSocketStore();
     const { sidebarExpand, setSidebarExpand } = useSidebarExpandStore();
 
@@ -81,6 +83,7 @@ export default function RoomHeader({ roomId }) {
                 <Link
                     href="/"
                     className="group flex items-center justify-center w-[30px] sm:w-[40px] aspect-square rounded-[10px] rotate-180 bg-neutral-100 cursor-pointer"
+                    onClick={() => { setRoom({}) }}
                 >
                     <IoIosExit size={18} className="text-neutral-400 group-hover:text-neutral-500 transition-colors" />
                 </Link>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react";
+import useRoomStore from "@/stores/room";
 import { useSession } from "@/hooks/useSession";
 
 import useRoomsStore from "@/stores/rooms";
@@ -13,9 +14,14 @@ import { readMessage } from "@/actions/message";
 export default function RoomEntry({ roomId }) {
     const session = useSession();
 
-    const { socket } = useSocketStore();
+    const { setRoom } = useRoomStore();
     const { rooms } = useRoomsStore();
+    const { socket } = useSocketStore();
     const { messages, addMessage, deleteMessage, readMessage: readMessageState } = useMessagesStore();
+
+    useEffect(() => {
+        setRoom({ id: roomId });
+    }, []);
 
     // Nhận sự kiện realtime khi vào room
     useEffect(() => {

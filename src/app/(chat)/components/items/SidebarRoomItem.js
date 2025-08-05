@@ -1,5 +1,6 @@
 "use client"
 
+import useRoomStore from "@/stores/room";
 import useSidebarExpandStore from "@/stores/sidebar-expand";
 
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { cn } from "@/libs/utils";
 import Link from "next/link";
 
 export default function SidebarRoomItem({ room: { id, partner, message }, session }) {
+    const { room } = useRoomStore();
     const { sidebarExpand, setSidebarExpand } = useSidebarExpandStore();
 
     const handleClick = () => { setSidebarExpand(!sidebarExpand); }
@@ -17,7 +19,10 @@ export default function SidebarRoomItem({ room: { id, partner, message }, sessio
         <li>
             <Link
                 href={`/room/${id}`}
-                className="flex items-center gap-[10px] p-[15px] bg-white hover:bg-neutral-100 rounded-[10px] transition-colors cursor-pointer"
+                className={cn(
+                    "flex items-center gap-[10px] p-[15px] bg-white hover:bg-neutral-100 rounded-[10px] transition-colors cursor-pointer",
+                    room?.id === id ? "bg-neutral-100" : ""
+                )}
                 onClick={handleClick}
             >
                 <div className="shrink-0 relative w-[50px] aspect-square rounded-full bg-slate-300">

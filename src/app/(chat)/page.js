@@ -1,9 +1,12 @@
 "use client"
 
+import useRoomStore from "@/stores/room";
 import useSidebarExpandStore from "@/stores/sidebar-expand";
+
 import { Menu } from "lucide-react";
 
 export default function Chat() {
+    const { submitting } = useRoomStore();
     const { sidebarExpand, setSidebarExpand } = useSidebarExpandStore();
 
     return (
@@ -15,7 +18,9 @@ export default function Chat() {
                 <Menu size={18} className="text-neutral-500 transition-colors"/>
             </button>
 
-            <p className="p-[20px] text-[15px] md:text-[17px] text-neutral-400 font-semibold">Bắt đầu nhắn tin tại Realchat.</p>
+            <p className="p-[20px] text-[16px] text-neutral-400 font-medium">
+                { submitting ? "Đang tạo phòng chat . . ." : "Bắt đầu nhắn tin tại Realchat." }
+            </p>
         </section>
     )
 }
